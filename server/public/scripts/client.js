@@ -1,7 +1,8 @@
-$(document).ready(readyNow);
+$(document).ready(onReady);
 
-function readyNow(){
+function onReady(){
     getThings();
+    $('#addThing').on('click', addThing);
 }
 
 function getThings(){
@@ -13,7 +14,7 @@ function getThings(){
         // log out the response
         console.log('back from the server with:', response); 
         let el =$('#thingsOut');
-        el.empty();  
+        el.empty();
         for(item of response){
             el.append(`<li>${item.name}</li>`)
         }
@@ -21,4 +22,21 @@ function getThings(){
         // catch errors here
         alert(err);
     });
+}
+
+function addThing(){
+    // use AJAX to make a POST request
+    let objectToSend = {
+        name: $('#nameIn').val()
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/things',
+        data: objectToSend
+    }).then(function(response){
+        console.log('back from the server with:', response);
+        getThings();
+    }).catch(function (err) {
+        alert(err);
+    }) // end POST
 }
