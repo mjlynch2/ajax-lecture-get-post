@@ -38,3 +38,38 @@ app.listen(port, ()=>{
 - run `node server/server.js` in terminal
 - add start script to package.json
 - add `app.use(express.static('server/public'));` to `server.js`
+
+Routes Basics
+===
+
+```
+// routes
+app.get('/things', (req, res)=>{
+    console.log('in /things GET');
+    res.send('meow');
+});
+```
+AJAX Basics
+===
+
+```
+function getThings(){
+    // use AJAX to make a GET request
+    $.ajax({
+        type: 'GET',
+        url: '/things'
+    }).then(function(response){
+        // log out the response
+        console.log('back from the server with:', response); 
+        let el =$('#thingsOut');
+        el.empty();  
+        for(item of response){
+            el.append(`<li>${item.name}</li>`)
+        }
+    }).catch(function(err){
+        // catch errors here
+        alert(err);
+    });
+}
+```
+
